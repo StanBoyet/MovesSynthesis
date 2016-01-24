@@ -16,6 +16,8 @@ gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth', '1.3.1'
 gem 'omniauth-moves', '~> 0.0.2'
 
+gem 'moves'
+
 group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'

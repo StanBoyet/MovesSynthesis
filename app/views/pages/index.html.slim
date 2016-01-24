@@ -1,1 +1,11 @@
-= link_to "Moves", user_omniauth_authorize_path(:moves)
+- if current_user
+  = link_to 'signout', destroy_user_session_path
+  ul
+    - @places.each do |place|
+      li = place['date'].to_date
+      ul
+        - place['segments'].each do |segment|
+          li = segment['place']['name']
+        
+- else
+  = link_to 'Moves', user_omniauth_authorize_path(:moves)
