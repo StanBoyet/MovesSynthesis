@@ -11,10 +11,13 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'aldous'
+
 gem 'devise'
 gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth', '1.3.1'
 gem 'omniauth-moves', '~> 0.0.2'
+
 
 gem 'moves'
 

@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :omniauth_providers => [:moves]
 
+  has_many :places, class_name: Moves::Place.name
+
   def self.from_omniauth(auth)
     byebug
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

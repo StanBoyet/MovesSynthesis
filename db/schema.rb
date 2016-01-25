@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124212006) do
+ActiveRecord::Schema.define(version: 20160125211053) do
+
+  create_table "places", force: :cascade do |t|
+    t.integer "moves_id"
+    t.string  "name"
+    t.string  "place_type"
+    t.float   "location_lat"
+    t.float   "location_lon"
+    t.string  "foursquare_id"
+    t.integer "user_id"
+  end
+
+  add_index "places", ["user_id"], name: "index_places_on_user_id"
+
+  create_table "segments", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "last_update"
+    t.integer  "place_id"
+  end
+
+  add_index "segments", ["place_id"], name: "index_segments_on_place_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "uid"

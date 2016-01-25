@@ -6,6 +6,8 @@
       ul
         - place['segments'].each do |segment|
           li = segment['place']['name']
+  pre
+    = JSON.pretty_generate(@places)
         
 - else
   = link_to 'Moves', user_omniauth_authorize_path(:moves)
