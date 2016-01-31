@@ -11,19 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125211053) do
+ActiveRecord::Schema.define(version: 20160131155728) do
 
-  create_table "places", force: :cascade do |t|
-    t.integer "moves_id"
-    t.string  "name"
-    t.string  "place_type"
-    t.float   "location_lat"
-    t.float   "location_lon"
-    t.string  "foursquare_id"
-    t.integer "user_id"
-  end
-
-  add_index "places", ["user_id"], name: "index_places_on_user_id"
+# Could not dump table "places" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "segments", force: :cascade do |t|
     t.datetime "start_time"

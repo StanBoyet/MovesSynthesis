@@ -6,29 +6,44 @@ class UpdateMovesService < Aldous::Service
   end
 
   def perform
-
-    byebug
     days = Moves::Client.new(current_user.access_token).daily_places(:pastDays => 4)
     days.each do |day|
-      day['segments'].each do |segment|
-        place_attr = segment['place']
-        new_place = Moves::Place.where(moves_id: place_attr['id']).first_or_create do |place|
-          #moves_id:integer name:string type:string location_lat:float location_lon:float foursquare_id:string user:references
-          place.name = place_attr['name']
-          place.place_type = place_attr['type']
-          place.location_lat = place_attr['location']['lat']
-          place.location_lon = place_attr['location']['lon']
-          place.foursquare_id = place_attr['foursquareId']
-          place.user = current_user
-        end
-
-        new_place.segments.create(start_time: segment['startTime'], end_time: segment['endTime'], last_update: segment['lastUpdate'])
-      end
+      create_segments_for_the_day(day)
     end
-
     Result::Success.new
-
   end
 
+  private
+
+  def create_segments_for_the_day(day)
+    day['segments'].each do |segment|
+      place = create_new_place(segment['place'])
+      place.segments.create(
+        start_time: segment['startTime'],
+        end_time: segment['endTime'],
+        last_update: segment['lastUpdate']
+      )
+    end
+  end
+
+  def create_new_place(place_attributes)
+    Moves::Place.where(moves_id: place_attributes['id']).first_or_create do |place|
+      place.name = place_attributes['name']
+      place.place_type = place_attributes['type']
+      place.location_lat = place_attributes['location']['lat']
+      place.location_lon = place_attributes['location']['lon']
+      provider_name = provider_id(place_attributes['type'])
+      place.provider_id = place_attributes[provider_name] if provider_name
+      place.user = current_user
+    end
+  end
+
+  def provider_id(provider)
+    if provider == 'foursquare'
+      'foursquareId'
+    elsif provider == 'facebook'
+      'facebookPlaceId'
+    end
+  end
 
 end
