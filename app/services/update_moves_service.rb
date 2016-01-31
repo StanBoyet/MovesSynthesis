@@ -18,6 +18,8 @@ class UpdateMovesService < Aldous::Service
   def create_segments_for_the_day(day)
     day['segments'].each do |segment|
       place = create_new_place(segment['place'])
+      start_time = segment['startTime'].to_datetime
+      return if place.segments.where(start_time: start_time).any?
       place.segments.create(
         start_time: segment['startTime'],
         end_time: segment['endTime'],
