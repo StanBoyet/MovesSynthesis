@@ -2,12 +2,9 @@
   = link_to 'signout', destroy_user_session_path
   ul
     - @places.each do |place|
-      li = place['date'].to_date
+      li = place.name
       ul
-        - place['segments'].each do |segment|
-          li = segment['place']['name']
-  pre
-    = JSON.pretty_generate(@places)
-        
+        - place.segments.each do |segment|
+          li = "#{((segment.end_time - segment.start_time) / 3600).round(0)}h"
 - else
   = link_to 'Moves', user_omniauth_authorize_path(:moves)

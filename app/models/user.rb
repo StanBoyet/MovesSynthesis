@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  devise :omniauthable, :omniauth_providers => [:moves]
+  devise :database_authenticatable, :authenticatable, :recoverable, :rememberable,
+         :trackable, :omniauthable, :omniauth_providers => [:moves]
 
   has_many :places, class_name: Moves::Place.name
 

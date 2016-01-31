@@ -2,11 +2,9 @@ class PagesController < ApplicationController
 
   def index
     if current_user
+      # Actual data usage
       UpdateMovesService.perform(current_user: current_user)
-      moves = Moves::Client.new(current_user.access_token)
-      @places = moves.daily_places(:pastDays => 4)
-      filtered_places = []
-      # @places.delete_if {|key, value| value.nil? }
+      @places = current_user.places
     end
   end
 
