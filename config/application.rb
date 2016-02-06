@@ -31,5 +31,7 @@ module MovesSynthesis
       #{config.root}/app/services
     )
 
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
   end
 end

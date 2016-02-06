@@ -17,9 +17,12 @@ gem 'devise'
 gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth', '1.3.1'
 gem 'omniauth-moves', '~> 0.0.2'
-
+gem 'draper', '~> 1.3'
 
 gem 'moves'
+
+gem 'foundation-rails'
+gem 'awesome_print'
 
 group :development, :test do
   gem 'byebug'

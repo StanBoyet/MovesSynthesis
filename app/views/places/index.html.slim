@@ -1,0 +1,8 @@
+.row
+  .medium-12.columns
+    - @places.each do |place|
+      .callout.large
+        h5
+          i.icon class="icon-#{place.markup_icon}"
+          = place.name
+        = ap(place.object, html: true).html_safe
