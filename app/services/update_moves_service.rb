@@ -6,7 +6,7 @@ class UpdateMovesService < Aldous::Service
   end
 
   def perform
-    days = Moves::Client.new(current_user.access_token).daily_places(:pastDays => 4)
+    days = Moves::Client.new(current_user.access_token).daily_places(:pastDays => 2)
     days.each do |day|
       create_segments_for_the_day(day)
     end
@@ -19,12 +19,13 @@ class UpdateMovesService < Aldous::Service
     day['segments'].each do |segment|
       place = create_new_place(segment['place'])
       start_time = segment['startTime'].to_datetime
-      return if place.segments.where(start_time: start_time).any?
-      place.segments.create(
-        start_time: segment['startTime'],
-        end_time: segment['endTime'],
-        last_update: segment['lastUpdate']
-      )
+      unless place.segments.where(start_time: start_time).any?
+        place.segments.create(
+            start_time: segment['startTime'],
+            end_time: segment['endTime'],
+            last_update: segment['lastUpdate']
+        )
+      end
     end
   end
 
